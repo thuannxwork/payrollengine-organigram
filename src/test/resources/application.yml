@@ -1,0 +1,6 @@
+---
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongo1:27020,mongo2:27018,mongo3:27019/test?replicaSet=rs0
