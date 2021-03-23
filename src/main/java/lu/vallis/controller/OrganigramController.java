@@ -17,13 +17,13 @@ public class OrganigramController {
     @GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + "/{rootId}")
     public ResponseEntity<OrganizationalUnit> getFullOrganization(@PathVariable("rootId") int rootId) {
 		System.out.println("rootId " + rootId);
-        return ResponseEntity.ok(nodeService.getFullTree(rootId));
+        return ResponseEntity.ok(nodeService.getFullOrganigram(rootId));
     }
 
 	@CrossOrigin(origins = "*")
     @GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + "/{rootId}/st/{orgUnitId}")
     public ResponseEntity<OrganizationalUnit> getSubOrganization(@PathVariable("rootId") int rootId, @PathVariable("orgUnitId") int orgUnitId) {
-        return ResponseEntity.ok(nodeService.getSubTree(rootId, orgUnitId, null));
+        return ResponseEntity.ok(nodeService.getSubOrganigram(rootId, orgUnitId, null));
     }
 
 	@CrossOrigin(origins = "*")

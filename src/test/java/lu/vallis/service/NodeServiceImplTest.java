@@ -34,7 +34,7 @@ class NodeServiceImplTest {
 
         when(nodeRepository.findDistinctByRootId(1)).thenReturn(Optional.of(Collections.singletonList(node)));
 
-        final OrganizationalUnit fullTree = nodeService.getFullTree(1);
+        final OrganizationalUnit fullTree = nodeService.getFullOrganigram(1);
         assertThat(fullTree)
                 .isNotNull()
                 .returns(1, from(OrganizationalUnit::getRootId))

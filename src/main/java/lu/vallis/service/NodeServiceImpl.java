@@ -27,8 +27,8 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
-    public OrganizationalUnit getFullTree(int treeId) {
-        List<Node> nodes = nodeRepository.findDistinctByRootId(treeId).orElseThrow(NotFoundException::new);
+    public OrganizationalUnit getFullOrganigram(int rootId) {
+        List<Node> nodes = nodeRepository.findDistinctByRootId(rootId).orElseThrow(NotFoundException::new);
 
         List<OrganizationalUnit> organizationalUnits = new ArrayList<>();
         for (Node node : nodes) {
@@ -43,8 +43,8 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
 	@Transactional(readOnly = true)
-    public OrganizationalUnit getSubTree(int treeId, int nodeId, Long maxDepth) {
-        List<Node> nodes = nodeRepository.getSubTree(treeId, nodeId, null).orElseThrow(NotFoundException::new);
+    public OrganizationalUnit getSubOrganigram(int rootId, int orgUnitId, Long maxDepth) {
+        List<Node> nodes = nodeRepository.getSubTree(rootId, orgUnitId, null).orElseThrow(NotFoundException::new);
 
         List<OrganizationalUnit> flatList = nodes.stream()
                 .map(Node::getDescendants)
@@ -60,14 +60,14 @@ public class NodeServiceImpl implements NodeService {
         BeanUtils.copyProperties(nodes.get(0), root, "id", "children");
         flatList.add(root);
 
-        return (NodeService.assembleTree(flatList, nodeId));
+        return (NodeService.assembleTree(flatList, orgUnitId));
     }
 
 	@Override
     @Transactional(rollbackFor = Exception.class)
-	public void deleteNodes(int treeId, int nodeId)  {
+	public void deleteNodes(int rootId, int orgUnitId)  {
 		// ... perform validations etc.
-		List<Node> nodes = nodeRepository.getSubTree(treeId, nodeId, 1L).orElseThrow(NotFoundException::new);
+		List<Node> nodes = nodeRepository.getSubTree(rootId, orgUnitId, 1L).orElseThrow(NotFoundException::new);
 		var target = nodes.get(0);
 		if (!CollectionUtils.isEmpty(target.getDescendants())) {
 			target.getDescendants().forEach(n -> n.setParentOrgUnitId(target.getParentOrgUnitId()));
@@ -87,7 +87,13 @@ public class NodeServiceImpl implements NodeService {
     	node.setName(OrganizationalUnit.getName());
 //    	node.setVersionId(OrganizationalUnit.getVersionId());
     	node.setEntityType(OrganizationalUnit.getEntityType());
-    	node.setOrgUnitId(new Random().nextInt()); // set a unique orgUnitId based on your policy
+		if (OrganizationalUnit.getOrgUnitId() < 0) {
+			node.setOrgUnitId(OrganizationalUnit.getOrgUnitId());
+		}
+		else {
+			int nextOrgUnitId = new Random().nextInt() & Integer.MAX_VALUE;
+			node.setOrgUnitId(nextOrgUnitId); // set a unique orgUnitId based on your policy
+		}
 
     	nodeRepository.save(node);
     	// iterate children and persist them as well...
@@ -95,9 +101,9 @@ public class NodeServiceImpl implements NodeService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void move(int treeId, int nodeId, int newParentNodeId) {
+	public void move(int rootId, int orgUnitId, int newParentNodeId) {
 		// ... perform validations etc.
-		var node = nodeRepository.findDistinctByRootIdAndOrgUnitId(treeId, nodeId).orElseThrow(NotFoundException::new);
+		var node = nodeRepository.findDistinctByRootIdAndOrgUnitId(rootId, orgUnitId).orElseThrow(NotFoundException::new);
 		node.setParentOrgUnitId(List.of(newParentNodeId));
 		nodeRepository.save(node);
 	}

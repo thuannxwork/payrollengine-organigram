@@ -24,7 +24,8 @@ public class OrganizationalUnit implements Serializable {
     @Id
     private int orgUnitId;
 
-    private int orgId;
+//    @DiffIgnore
+//    private int orgUnitId;
 
 //    private int versionId;
 

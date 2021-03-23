@@ -11,9 +11,9 @@ public interface NodeService {
 
     int DEFAULT_ROOT_NODE_ID = -1;
 
-    OrganizationalUnit getFullTree(int treeId);
+    OrganizationalUnit getFullOrganigram(int rootId);
 
-    OrganizationalUnit getSubTree(int treeId, int nodeId, Long maxDepth);
+    OrganizationalUnit getSubOrganigram(int rootId, int orgUnitId, Long maxDepth);
 
     void deleteNodes(int treeId, int nodeId);
 

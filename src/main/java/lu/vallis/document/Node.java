@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "nodes")
+@Document(collection = "OrganizationalUnits")
 @Getter
 @Setter
 @NoArgsConstructor

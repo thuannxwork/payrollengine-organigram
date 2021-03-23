@@ -56,7 +56,7 @@ class GraphLookupTestsIT {
 	@DisplayName(value = "given an existing tree and orgUnitId, retrieve its descendants")
     @Test
     void testSubTreeRetrieval() {
-        OrganizationalUnit node = nodeService.getSubTree(1001, 0, null);
+        OrganizationalUnit node = nodeService.getSubOrganigram(1001, 0, null);
         assertThat(node).isNotNull();
     }
 
