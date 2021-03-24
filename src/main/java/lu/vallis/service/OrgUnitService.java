@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public interface NodeService {
+public interface OrgUnitService {
 
     int DEFAULT_ROOT_NODE_ID = -1;
 
@@ -15,20 +15,20 @@ public interface NodeService {
 
     OrganizationalUnit getSubOrganigram(int rootId, int orgUnitId, Long maxDepth);
 
-    void deleteNodes(int treeId, int nodeId);
+    void deleteOrgUnitNodes(int rootId, int orgUnitId);
 
 	void create(OrganizationalUnit OrganizationalUnit);
 
-	void move(int treeId, int nodeId, int newParentNodeId);
+	void move(int rootId, int orgUnitId, int newParentNodeId);
 
-	static OrganizationalUnit assembleTree(final List<OrganizationalUnit> nodes, final int rootNodeId) {
+	static OrganizationalUnit assembleTree(final List<OrganizationalUnit> orgUnitNodes, final int rootNodeId) {
         final Map<Integer, OrganizationalUnit> mapTmp = new LinkedHashMap<>();
-        // Save all nodes to a map
-        for (final OrganizationalUnit current : nodes) {
+        // Save all orgUnitNodes to a map
+        for (final OrganizationalUnit current : orgUnitNodes) {
             mapTmp.put(current.getOrgUnitId(), current);
         }
         // Loop and assign parent/child relationships
-        for (final OrganizationalUnit current : nodes) {
+        for (final OrganizationalUnit current : orgUnitNodes) {
             final List<Integer> parents = current.getParentOrgUnitId();
 
             if (!CollectionUtils.isEmpty(parents)) {
