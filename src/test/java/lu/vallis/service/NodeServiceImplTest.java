@@ -1,8 +1,8 @@
 package lu.vallis.service;
 
-import lu.vallis.document.OrganizationalUnitDoc;
+import lu.vallis.document.Node;
 import lu.vallis.entity.OrganizationalUnit;
-import lu.vallis.repository.OrgUnitRepository;
+import lu.vallis.repository.NodeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,16 +20,16 @@ import static org.mockito.Mockito.when;
 class NodeServiceImplTest {
 
     @InjectMocks
-    private OrgUnitServiceImpl nodeService;
+    private NodeServiceImpl nodeService;
 
     @Mock
-    private OrgUnitRepository nodeRepository;
+    private NodeRepository nodeRepository;
 
     @Test
     void getFullTree() throws Exception {
-        final OrganizationalUnitDoc node = new OrganizationalUnitDoc();
+        final Node node = new Node();
         node.setRootId(1);
-        node.setOrgUnitId(OrgUnitService.DEFAULT_ROOT_NODE_ID);
+        node.setOrgUnitId(NodeService.DEFAULT_ROOT_NODE_ID);
         node.setName("name1");
 
         when(nodeRepository.findDistinctByRootId(1)).thenReturn(Optional.of(Collections.singletonList(node)));

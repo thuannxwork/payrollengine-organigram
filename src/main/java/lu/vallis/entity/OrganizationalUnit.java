@@ -2,6 +2,7 @@
 package lu.vallis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lu.vallis.enumeration.EntityType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,11 +22,16 @@ import java.util.List;
 public class OrganizationalUnit implements Serializable {
 
     @Id
-    private int id;
-
     private int orgUnitId;
 
+//    @DiffIgnore
+//    private int orgUnitId;
+
+//    private int versionId;
+
     private String name;
+
+    private EntityType entityType;
 
     @DiffIgnore
     private int rootId;
