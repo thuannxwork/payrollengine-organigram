@@ -1,8 +1,8 @@
 package lu.vallis.service;
 
 import lu.vallis.entity.OrganizationalUnit;
-import lu.vallis.repository.NodeRepository;
-import lu.vallis.document.Node;
+import lu.vallis.repository.OrgUnitRepository;
+import lu.vallis.document.OrganizationalUnitDoc;
 import lu.vallis.exception.NotFoundException;
 import lombok.extern.java.Log;
 import org.springframework.beans.BeanUtils;
@@ -18,36 +18,36 @@ import java.util.stream.Collectors;
 
 @Log
 @Service
-public class NodeServiceImpl implements NodeService {
+public class OrgUnitServiceImpl implements OrgUnitService {
 
-    private final NodeRepository nodeRepository;
+    private final OrgUnitRepository nodeRepository;
 
-    public NodeServiceImpl(NodeRepository nodeRepository) {
-        this.nodeRepository = nodeRepository;
+    public OrgUnitServiceImpl(OrgUnitRepository nodeRepository) {
+    	this.nodeRepository = nodeRepository;
     }
 
     @Override
     public OrganizationalUnit getFullOrganigram(int rootId) {
-        List<Node> nodes = nodeRepository.findDistinctByRootId(rootId).orElseThrow(NotFoundException::new);
+        List<OrganizationalUnitDoc> orgCharts = nodeRepository.findDistinctByRootId(rootId).orElseThrow(NotFoundException::new);
 
         List<OrganizationalUnit> organizationalUnits = new ArrayList<>();
-        for (Node node : nodes) {
+        for (OrganizationalUnitDoc chartNode : orgCharts) {
             OrganizationalUnit organizationalUnit = new OrganizationalUnit();
-            BeanUtils.copyProperties(node, organizationalUnit, "id", "children");
+            BeanUtils.copyProperties(chartNode, organizationalUnit, "id", "children");
 
 			organizationalUnits.add(organizationalUnit);
         }
 
-        return NodeService.assembleTree(organizationalUnits, DEFAULT_ROOT_NODE_ID);
+        return OrgUnitService.assembleTree(organizationalUnits, DEFAULT_ROOT_NODE_ID);
     }
 
     @Override
 	@Transactional(readOnly = true)
     public OrganizationalUnit getSubOrganigram(int rootId, int orgUnitId, Long maxDepth) {
-        List<Node> nodes = nodeRepository.getSubTree(rootId, orgUnitId, null).orElseThrow(NotFoundException::new);
+        List<OrganizationalUnitDoc> orgUnitNodes = nodeRepository.getSubOrganigram(rootId, orgUnitId, null).orElseThrow(NotFoundException::new);
 
-        List<OrganizationalUnit> flatList = nodes.stream()
-                .map(Node::getDescendants)
+        List<OrganizationalUnit> flatList = orgUnitNodes.stream()
+                .map(OrganizationalUnitDoc::getDescendants)
                 .flatMap(Collection::stream)
                 .map(node -> {
                     OrganizationalUnit tr = new OrganizationalUnit();
@@ -57,17 +57,17 @@ public class NodeServiceImpl implements NodeService {
                 .collect(Collectors.toList());
 
         OrganizationalUnit root = new OrganizationalUnit();
-        BeanUtils.copyProperties(nodes.get(0), root, "id", "children");
+        BeanUtils.copyProperties(orgUnitNodes.get(0), root, "id", "children");
         flatList.add(root);
 
-        return (NodeService.assembleTree(flatList, orgUnitId));
+        return (OrgUnitService.assembleTree(flatList, orgUnitId));
     }
 
 	@Override
     @Transactional(rollbackFor = Exception.class)
-	public void deleteNodes(int rootId, int orgUnitId)  {
+	public void deleteOrgUnitNodes(int rootId, int orgUnitId)  {
 		// ... perform validations etc.
-		List<Node> nodes = nodeRepository.getSubTree(rootId, orgUnitId, 1L).orElseThrow(NotFoundException::new);
+		List<OrganizationalUnitDoc> nodes = nodeRepository.getSubOrganigram(rootId, orgUnitId, 1L).orElseThrow(NotFoundException::new);
 		var target = nodes.get(0);
 		if (!CollectionUtils.isEmpty(target.getDescendants())) {
 			target.getDescendants().forEach(n -> n.setParentOrgUnitId(target.getParentOrgUnitId()));
@@ -81,12 +81,12 @@ public class NodeServiceImpl implements NodeService {
 	@Transactional(rollbackFor = Exception.class)
 	public void create(OrganizationalUnit OrganizationalUnit) {
     	// ... check if parent exists etc.
-    	Node node = new Node();
+    	OrganizationalUnitDoc node = new OrganizationalUnitDoc();
     	node.setRootId(OrganizationalUnit.getRootId());
     	node.setParentOrgUnitId(OrganizationalUnit.getParentOrgUnitId());
     	node.setName(OrganizationalUnit.getName());
 //    	node.setVersionId(OrganizationalUnit.getVersionId());
-    	node.setEntityType(OrganizationalUnit.getEntityType());
+//    	node.setEntityType(OrganizationalUnit.getEntityType());
 		if (OrganizationalUnit.getOrgUnitId() < 0) {
 			node.setOrgUnitId(OrganizationalUnit.getOrgUnitId());
 		}
