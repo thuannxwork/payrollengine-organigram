@@ -1,7 +1,8 @@
 package lu.vallis.controller;
 
 import lu.vallis.common.URI;
-import lu.vallis.entity.OrganizationalUnit;
+import lu.vallis.entity.bean.OrganizationalEmployee;
+import lu.vallis.entity.bean.OrganizationalUnit;
 import lu.vallis.service.OrgUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,18 @@ public class OrgUnitController {
     }
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT_EMPLOYEE + "/{rootId}")
+	@GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT_FULL + "/{rootId}")
 	public ResponseEntity<OrganizationalUnit> getFullEmployeeOrganization(@PathVariable("rootId") int rootId) {
 		System.out.println("rootId " + rootId);
 		return ResponseEntity.ok(organizationalService.getFullEmployeeOrganigram(rootId));
+	}
+
+	@CrossOrigin(origins = "*")
+	@GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT_EMPLOYEE + "/{rootId}")
+	public ResponseEntity<OrganizationalEmployee> getEmployeeOrganization(@PathVariable("rootId") int rootId) throws Exception {
+		System.out.println("rootId " + rootId);
+		OrganizationalEmployee result = organizationalService.getEmployeeOrganigram(rootId);
+		return ResponseEntity.ok(result);
 	}
 
 	@CrossOrigin(origins = "*")

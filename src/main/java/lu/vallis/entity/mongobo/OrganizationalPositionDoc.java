@@ -1,4 +1,4 @@
-package lu.vallis.document;
+package lu.vallis.entity.mongobo;
 
 //organizationPosition correspond to role
 
@@ -9,18 +9,16 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "organizational_employee")
+@Document(collection = "organizational_position")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizationalEmployeeDoc {
+public class OrganizationalPositionDoc {
     @Id
     private String id;
-    private String orgUnitId;
-    private String orgPosId;
     private String name;
-    private String imgUrl;
+    private Boolean isManager;
+    private int level;
     private String status;
-    private String employeeId;
 }

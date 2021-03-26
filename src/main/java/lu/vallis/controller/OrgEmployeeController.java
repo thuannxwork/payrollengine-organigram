@@ -1,12 +1,9 @@
 package lu.vallis.controller;
 
 import lu.vallis.common.URI;
-import lu.vallis.entity.OrganizationalEmployee;
-import lu.vallis.entity.OrganizationalUnit;
+import lu.vallis.entity.bean.OrganizationalEmployee;
 import lu.vallis.service.OrgEmployeeService;
-import lu.vallis.service.OrgUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

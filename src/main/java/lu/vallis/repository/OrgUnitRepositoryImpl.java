@@ -1,6 +1,6 @@
 package lu.vallis.repository;
 
-import lu.vallis.document.OrganizationalUnitDoc;
+import lu.vallis.entity.mongobo.OrganizationalUnitDoc;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.GraphLookupOperation;

@@ -1,5 +1,5 @@
 
-package lu.vallis.document;
+package lu.vallis.entity.mongobo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

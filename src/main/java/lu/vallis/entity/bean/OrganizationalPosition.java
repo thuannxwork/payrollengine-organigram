@@ -1,4 +1,4 @@
-package lu.vallis.entity;
+package lu.vallis.entity.bean;
 
 //organizationPosition correspond to role
 

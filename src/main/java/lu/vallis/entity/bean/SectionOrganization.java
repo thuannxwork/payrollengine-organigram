@@ -1,4 +1,4 @@
-package lu.vallis.entity;
+package lu.vallis.entity.bean;
 
 public class SectionOrganization {
     private static final long serialVersionUID = 6953127036950571587L;

@@ -1,7 +1,7 @@
 package lu.vallis.controller;
 
 import lu.vallis.common.URI;
-import lu.vallis.entity.OrganizationalPosition;
+import lu.vallis.entity.bean.OrganizationalPosition;
 import lu.vallis.service.OrgPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

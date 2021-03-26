@@ -1,8 +1,8 @@
 package lu.vallis.service;
 
 import lu.vallis.common.Constants;
-import lu.vallis.document.OrganizationalUnitDoc;
-import lu.vallis.entity.OrganizationalUnit;
+import lu.vallis.entity.mongobo.OrganizationalUnitDoc;
+import lu.vallis.entity.bean.OrganizationalUnit;
 import lu.vallis.repository.OrgUnitRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

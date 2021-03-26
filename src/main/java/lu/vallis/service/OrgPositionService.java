@@ -1,6 +1,6 @@
 package lu.vallis.service;
 
-import lu.vallis.entity.OrganizationalPosition;
+import lu.vallis.entity.bean.OrganizationalPosition;
 
 public interface OrgPositionService {
 

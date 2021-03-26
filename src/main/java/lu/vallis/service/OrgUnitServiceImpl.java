@@ -1,11 +1,10 @@
 package lu.vallis.service;
 
 import lu.vallis.common.Constants;
-import lu.vallis.entity.OrganizationalEmployee;
-import lu.vallis.entity.OrganizationalPosition;
-import lu.vallis.entity.OrganizationalUnit;
+import lu.vallis.entity.bean.OrganizationalEmployee;
+import lu.vallis.entity.bean.OrganizationalUnit;
 import lu.vallis.repository.OrgUnitRepository;
-import lu.vallis.document.OrganizationalUnitDoc;
+import lu.vallis.entity.mongobo.OrganizationalUnitDoc;
 import lu.vallis.exception.NotFoundException;
 import lombok.extern.java.Log;
 import org.bson.types.ObjectId;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import lu.vallis.common.Constants.Status;
-import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,6 +47,50 @@ public class OrgUnitServiceImpl implements OrgUnitService {
 				BeanUtils.copyProperties(orgUnitDoc, organizationalUnit);
 
 				// find staff list
+//				List<OrganizationalEmployee> employees = employeeService.getAllFullInfoByOrgUnitId(organizationalUnit.getId());
+//				organizationalUnit.setEmployees(employees);
+//
+//				OrganizationalEmployee headOfUnit = null;
+//				List<OrganizationalEmployee> managers = new ArrayList<OrganizationalEmployee>();
+//
+//				int managerLevel = 999999999;
+//
+//				for (OrganizationalEmployee employee : employees) {
+//					// get position
+//					if (employee.getPostion() != null && employee.getPostion().getIsManager()) {
+//						managers.add(employee);
+//						if (managerLevel > employee.getPostion().getLevel()) {
+//							managerLevel = employee.getPostion().getLevel();
+//							headOfUnit = employee;
+//						}
+//					}
+//				}
+//
+//				organizationalUnit.setManagers(managers);
+//				organizationalUnit.setHeadOfUnit(headOfUnit);
+
+				organizationalUnits.add(organizationalUnit);
+				rootOrgUnitId = orgCharts.get(0) != null ? orgCharts.get(0).getId() : Constants.DEFAULT_ROOT_NODE_ID;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+        return OrgUnitService.assembleTree(organizationalUnits, rootOrgUnitId);
+    }
+
+	@Override
+	public OrganizationalEmployee getEmployeeOrganigram(int rootId)  throws Exception {
+		List<OrganizationalUnit> organizationalUnits = new ArrayList<>();
+		String rootOrgUnitId = "";
+		try {
+			List<OrganizationalUnitDoc> orgCharts = nodeRepository.findDistinctByRootId(rootId).orElseThrow(NotFoundException::new);
+
+			for (OrganizationalUnitDoc orgUnitDoc : orgCharts) {
+				OrganizationalUnit organizationalUnit = new OrganizationalUnit();
+				BeanUtils.copyProperties(orgUnitDoc, organizationalUnit);
+
+				// find staff list
 				List<OrganizationalEmployee> employees = employeeService.getAllFullInfoByOrgUnitId(organizationalUnit.getId());
 				organizationalUnit.setEmployees(employees);
 
@@ -68,7 +110,6 @@ public class OrgUnitServiceImpl implements OrgUnitService {
 					}
 				}
 
-				organizationalUnit.setManagers(managers);
 				organizationalUnit.setHeadOfUnit(headOfUnit);
 
 				organizationalUnits.add(organizationalUnit);
@@ -78,8 +119,14 @@ public class OrgUnitServiceImpl implements OrgUnitService {
 			e.printStackTrace();
 		}
 
-        return OrgUnitService.assembleTree(organizationalUnits, rootOrgUnitId);
-    }
+		OrganizationalUnit organizationalUnit = OrgUnitService.assembleTree(organizationalUnits, rootOrgUnitId);
+
+		String rootEmployeeId = organizationalUnit.getHeadOfUnit().getId();
+
+		List<OrganizationalEmployee> allEmployees = employeeService.getAllEmployees();
+
+		return OrgUnitService.assembleEmployeeTree(organizationalUnits, allEmployees, rootEmployeeId);
+	}
 
 	@Override
 	public OrganizationalUnit getFullEmployeeOrganigram(int rootId) {

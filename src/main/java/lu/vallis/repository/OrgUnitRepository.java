@@ -1,6 +1,6 @@
 package lu.vallis.repository;
 
-import lu.vallis.document.OrganizationalUnitDoc;
+import lu.vallis.entity.mongobo.OrganizationalUnitDoc;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;

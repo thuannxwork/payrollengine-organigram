@@ -1,5 +1,5 @@
 
-package lu.vallis.entity;
+package lu.vallis.entity.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

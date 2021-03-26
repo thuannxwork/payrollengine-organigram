@@ -34,7 +34,7 @@ npm install
 ```
 
 ```
-npm run dev
+npm run serve
 ```
 
 ##3. Access application

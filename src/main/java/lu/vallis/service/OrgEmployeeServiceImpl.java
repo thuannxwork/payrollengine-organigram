@@ -2,9 +2,9 @@ package lu.vallis.service;
 
 import lombok.extern.java.Log;
 import lu.vallis.common.Constants.Status;
-import lu.vallis.document.OrganizationalEmployeeDoc;
-import lu.vallis.entity.OrganizationalEmployee;
-import lu.vallis.entity.OrganizationalPosition;
+import lu.vallis.entity.mongobo.OrganizationalEmployeeDoc;
+import lu.vallis.entity.bean.OrganizationalEmployee;
+import lu.vallis.entity.bean.OrganizationalPosition;
 import lu.vallis.repository.OrgEmployeeRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +33,21 @@ public class OrgEmployeeServiceImpl implements OrgEmployeeService {
 		BeanUtils.copyProperties(employeeDoc, employee);
 		return employee;
 	}
+
+
+	@Override
+	public List<OrganizationalEmployee> getAllEmployees() {
+		List<OrganizationalEmployee> employees = new ArrayList<OrganizationalEmployee>();
+		List<OrganizationalEmployeeDoc> employeeDocs = repository.findAll();
+		for (OrganizationalEmployeeDoc employeeDoc : employeeDocs) {
+			OrganizationalEmployee employee = new OrganizationalEmployee();
+			BeanUtils.copyProperties(employeeDoc, employee);
+			employees.add(employee);
+		}
+
+		return employees;
+	}
+
 
 	@Override
 	public OrganizationalEmployee getFullInfoById(String id) {

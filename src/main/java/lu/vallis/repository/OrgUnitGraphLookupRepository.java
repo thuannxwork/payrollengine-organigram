@@ -1,6 +1,6 @@
 package lu.vallis.repository;
 
-import lu.vallis.document.OrganizationalUnitDoc;
+import lu.vallis.entity.mongobo.OrganizationalUnitDoc;
 
 import java.util.List;
 import java.util.Optional;

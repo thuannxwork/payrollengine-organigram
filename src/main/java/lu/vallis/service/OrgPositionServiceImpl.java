@@ -1,8 +1,8 @@
 package lu.vallis.service;
 
 import lombok.extern.java.Log;
-import lu.vallis.document.OrganizationalPositionDoc;
-import lu.vallis.entity.OrganizationalPosition;
+import lu.vallis.entity.mongobo.OrganizationalPositionDoc;
+import lu.vallis.entity.bean.OrganizationalPosition;
 import lu.vallis.repository.OrgPositionRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
