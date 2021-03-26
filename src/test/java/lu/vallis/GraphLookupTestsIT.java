@@ -32,17 +32,17 @@ class GraphLookupTestsIT {
 	void populate() {
 		OrganizationalUnitDoc SectionOrganization = new OrganizationalUnitDoc();
 		SectionOrganization.setRootId(1001);
-		SectionOrganization.setOrgUnitId(0);
+//		SectionOrganization.setOrgUnitId("0");
 		SectionOrganization.setName("oak");
-		SectionOrganization.setParentOrgUnitId(List.of(-1));
+		SectionOrganization.setParentOrgUnitId(List.of("-1"));
 
 		nodeRepository.save(SectionOrganization);
 
 		OrganizationalUnitDoc leafOrgUnitNode = new OrganizationalUnitDoc();
 		leafOrgUnitNode.setRootId(1001);
-		leafOrgUnitNode.setOrgUnitId(5);
+//		leafOrgUnitNode.setOrgUnitId("5");
 		leafOrgUnitNode.setName("leaf");
-		leafOrgUnitNode.setParentOrgUnitId(List.of(0));
+		leafOrgUnitNode.setParentOrgUnitId(List.of("0"));
 
 		nodeRepository.save(leafOrgUnitNode);
 	}
@@ -50,7 +50,7 @@ class GraphLookupTestsIT {
 	@DisplayName(value = "given an existing tree and orgUnitId, retrieve its descendants")
     @Test
     void testSubTreeRetrieval() {
-        OrganizationalUnit node = nodeService.getSubOrganigram(1001, 0, null);
+        OrganizationalUnit node = nodeService.getSubOrganigram(1001, "0", null);
         assertThat(node).isNotNull();
     }
 

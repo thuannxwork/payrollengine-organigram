@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface OrgUnitGraphLookupRepository {
 
-	Optional<List<OrganizationalUnitDoc>> getSubOrganigram(int rootId, int orgUnitId, Long maxDepth);
+	Optional<List<OrganizationalUnitDoc>> getSubOrganigram(int rootId, String orgUnitId, Long maxDepth);
 
 }

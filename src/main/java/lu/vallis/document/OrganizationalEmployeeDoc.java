@@ -16,8 +16,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class OrganizationalEmployeeDoc {
     @Id
-    private int id;
-    private int orgUnitId;
+    private String id;
+    private String orgUnitId;
     private int orgPosId;
     private String name;
     private String imgUrl;

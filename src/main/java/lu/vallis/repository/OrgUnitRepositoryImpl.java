@@ -24,7 +24,7 @@ public class OrgUnitRepositoryImpl implements OrgUnitGraphLookupRepository {
 	}
 
 	@Override
-	public Optional<List<OrganizationalUnitDoc>> getSubOrganigram(int rootId, int orgUnitId, Long maxDepth) {
+	public Optional<List<OrganizationalUnitDoc>> getSubOrganigram(int rootId, String orgUnitId, Long maxDepth) {
 		final Criteria byNodeId = new Criteria("orgUnitId").is(orgUnitId);
 		final Criteria byTreeId = new Criteria("rootId").is(rootId);
 		final MatchOperation matchStage = Aggregation.match(byTreeId.andOperator(byNodeId));

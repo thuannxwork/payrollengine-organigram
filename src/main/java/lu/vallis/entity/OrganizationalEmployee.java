@@ -12,9 +12,10 @@ import org.javers.core.metamodel.annotation.TypeName;
 @ToString
 public class OrganizationalEmployee {
     @Id
-    private int id;
-    private int orgUnitId;
-    private int orgPosId;
+    private String id;
+    private String orgUnitId;
+    private String orgPosId;
     private String name;
     private String imgUrl;
+    private String status;
 }

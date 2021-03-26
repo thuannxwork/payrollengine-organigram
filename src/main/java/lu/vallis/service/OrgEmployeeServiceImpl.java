@@ -31,6 +31,18 @@ public class OrgEmployeeServiceImpl implements OrgEmployeeService {
 	}
 
 	@Override
+	public List<OrganizationalEmployee> getAllByOrgUnitId(String orgUnitId) {
+		List<OrganizationalEmployeeDoc> lstEmployeeDoc = repository.findByOrgUnitId(orgUnitId);
+		Objects.requireNonNull(lstEmployeeDoc, "employee not found");
+		List<OrganizationalEmployee> lstEmployee = new ArrayList<OrganizationalEmployee>();
+
+		for (int i = 0; i < lstEmployeeDoc.size(); i++) {
+			BeanUtils.copyProperties(lstEmployeeDoc.get(i), lstEmployee.get(i));
+		}
+		return lstEmployee;
+	}
+
+	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void create(OrganizationalEmployee organizationalEmployee) {
 		OrganizationalEmployeeDoc newEmployeeDoc = new OrganizationalEmployeeDoc();

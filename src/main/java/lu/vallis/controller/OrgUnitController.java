@@ -14,38 +14,57 @@ public class OrgUnitController {
 	OrgUnitService organizationalService;
 
 	@CrossOrigin(origins = "*")
-    @GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + "/{rootId}")
+    @GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT + "/{rootId}")
     public ResponseEntity<OrganizationalUnit> getFullOrganization(@PathVariable("rootId") int rootId) {
 		System.out.println("rootId " + rootId);
         return ResponseEntity.ok(organizationalService.getFullOrganigram(rootId));
     }
 
 	@CrossOrigin(origins = "*")
-    @GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + "/{rootId}/st/{orgUnitId}")
-    public ResponseEntity<OrganizationalUnit> getSubOrganization(@PathVariable("rootId") int rootId, @PathVariable("orgUnitId") int orgUnitId) {
+	@GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT_EMPLOYEE + "/{rootId}")
+	public ResponseEntity<OrganizationalUnit> getFullEmployeeOrganization(@PathVariable("rootId") int rootId) {
+		System.out.println("rootId " + rootId);
+		return ResponseEntity.ok(organizationalService.getFullEmployeeOrganigram(rootId));
+	}
+
+	@CrossOrigin(origins = "*")
+    @GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT + "/{rootId}/st/{orgUnitId}")
+    public ResponseEntity<OrganizationalUnit> getSubOrganization(@PathVariable("rootId") int rootId, @PathVariable("orgUnitId") String orgUnitId) {
         return ResponseEntity.ok(organizationalService.getSubOrganigram(rootId, orgUnitId, null));
     }
 
 	@CrossOrigin(origins = "*")
-    @DeleteMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + "/{rootId}/{orgUnitId}")
-	public ResponseEntity<Void> deleteOrgUnitNodes(@PathVariable("rootId") int rootId, @PathVariable("orgUnitId") int orgUnitId) {
+	@GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT_EMPLOYEE + "/{rootId}/st/{orgUnitId}")
+	public ResponseEntity<OrganizationalUnit> getSubEmployeeOrganization(@PathVariable("rootId") int rootId, @PathVariable("orgUnitId") String orgUnitId) {
+		return ResponseEntity.ok(organizationalService.getSubEmployeeOrganigram(rootId, orgUnitId, null));
+	}
+
+	@CrossOrigin(origins = "*")
+    @DeleteMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT + "/{rootId}/{orgUnitId}")
+	public ResponseEntity<Void> deleteOrgUnitNodes(@PathVariable("rootId") int rootId, @PathVariable("orgUnitId") String orgUnitId) {
     	organizationalService.deleteOrgUnitNodes(rootId, orgUnitId);
     	return ResponseEntity.noContent().build();
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE)
+	@PostMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT)
 	public ResponseEntity<Void> create(@RequestBody OrganizationalUnit OrganizationalUnit) {
 		organizationalService.create(OrganizationalUnit);
 		return ResponseEntity.ok().build();
 	}
 
 	@CrossOrigin(origins = "*")
-	@PutMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + "/{rootId}/{orgUnitId}")
-	public ResponseEntity<Void> move(@PathVariable("rootId") int rootId, @PathVariable("orgUnitId") int orgUnitId,
-			@RequestParam int newParentOrgUnitId) {
+	@PutMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT + "/{rootId}/{orgUnitId}")
+	public ResponseEntity<Void> move(@PathVariable("rootId") int rootId, @PathVariable("orgUnitId") String orgUnitId,
+			@RequestParam String newParentOrgUnitId) {
 		organizationalService.move(rootId, orgUnitId , newParentOrgUnitId);
 		return ResponseEntity.ok().build();
 	}
 
+	@CrossOrigin(origins = "*")
+	@DeleteMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT + URI.ID)
+	public ResponseEntity<Void> deleteUnit(@PathVariable("id") String id) {
+		organizationalService.delete(id);
+		return ResponseEntity.noContent().build();
+	}
 }

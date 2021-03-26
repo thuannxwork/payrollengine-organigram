@@ -1,5 +1,6 @@
 package lu.vallis.common;
 
+
 public class Constants {
     public static enum Status {
         ACTIVE,
@@ -8,4 +9,6 @@ public class Constants {
         private Status() {
         }
     }
+
+    public static final String DEFAULT_ROOT_NODE_ID = "-1";
 }

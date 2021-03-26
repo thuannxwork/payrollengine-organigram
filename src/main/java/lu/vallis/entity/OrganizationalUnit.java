@@ -21,23 +21,31 @@ import java.util.List;
 public class OrganizationalUnit implements Serializable {
 
     @Id
-    private int id;
-
-    private int orgUnitId;
+    private String id;
 
     private String name;
+
+    private String managerId;
+
+    @DiffIgnore
+    private OrganizationalEmployee manager;
 
     @DiffIgnore
     private int rootId;
 
     @DiffIgnore
-    private List<Integer> parentOrgUnitId;
+    private List<String> parentOrgUnitId;
 
     private List<OrganizationalUnit> children;
 
     @DiffIgnore
     @JsonIgnore
     private List<OrganizationalUnit> parents;
+
+    @DiffIgnore
+    private List<OrganizationalEmployee> employees;
+
+    private String status;
 
     public OrganizationalUnit() {
         this.parentOrgUnitId = new ArrayList<>();

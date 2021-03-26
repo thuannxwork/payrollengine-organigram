@@ -20,14 +20,18 @@ public class OrganizationalUnitDoc {
   @Id
   private String id;
 
-  private int orgUnitId;
+//  private String orgUnitId;
 
   private String name;
 
   private int rootId;
 
-  private List<Integer> parentOrgUnitId;
+  private List<String> parentOrgUnitId;
 
   private List<OrganizationalUnitDoc> descendants;
+
+  private Long managerId;
+
+  private String status;
 
 }

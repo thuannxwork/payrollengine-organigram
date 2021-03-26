@@ -1,5 +1,6 @@
 package lu.vallis.service;
 
+import lu.vallis.common.Constants;
 import lu.vallis.document.OrganizationalUnitDoc;
 import lu.vallis.entity.OrganizationalUnit;
 import lu.vallis.repository.OrgUnitRepository;
@@ -9,7 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +32,9 @@ class NodeServiceImplTest {
     void getFullTree() throws Exception {
         final OrganizationalUnitDoc node = new OrganizationalUnitDoc();
         node.setRootId(1);
-        node.setOrgUnitId(OrgUnitService.DEFAULT_ROOT_NODE_ID);
+        List<String> partentIds = new ArrayList<String>();
+        partentIds.add(Constants.DEFAULT_ROOT_NODE_ID);
+        node.setParentOrgUnitId(partentIds);
         node.setName("name1");
 
         when(nodeRepository.findDistinctByRootId(1)).thenReturn(Optional.of(Collections.singletonList(node)));

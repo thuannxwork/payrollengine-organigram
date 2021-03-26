@@ -12,7 +12,8 @@ import org.javers.core.metamodel.annotation.TypeName;
 @ToString
 public class OrganizationalPosition {
     @Id
-    private int id;
+    private String id;
     private String name;
     private boolean isManager;
+    private String status;
 }
