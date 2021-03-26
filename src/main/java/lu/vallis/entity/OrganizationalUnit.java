@@ -25,10 +25,11 @@ public class OrganizationalUnit implements Serializable {
 
     private String name;
 
-    private String managerId;
+    @DiffIgnore
+    private List<OrganizationalEmployee> managers;
 
     @DiffIgnore
-    private OrganizationalEmployee manager;
+    private OrganizationalEmployee headOfUnit;
 
     @DiffIgnore
     private int rootId;

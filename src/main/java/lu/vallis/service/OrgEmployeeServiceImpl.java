@@ -4,6 +4,7 @@ import lombok.extern.java.Log;
 import lu.vallis.common.Constants.Status;
 import lu.vallis.document.OrganizationalEmployeeDoc;
 import lu.vallis.entity.OrganizationalEmployee;
+import lu.vallis.entity.OrganizationalPosition;
 import lu.vallis.repository.OrgEmployeeRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
@@ -20,6 +21,9 @@ public class OrgEmployeeServiceImpl implements OrgEmployeeService {
 	@Autowired
     private OrgEmployeeRepository repository;
 
+	@Autowired
+	private OrgPositionService positionService;
+
 	@Override
 	public OrganizationalEmployee getById(String id) {
 		OrganizationalEmployeeDoc employeeDoc = repository.findById(new ObjectId(""
@@ -31,13 +35,50 @@ public class OrgEmployeeServiceImpl implements OrgEmployeeService {
 	}
 
 	@Override
+	public OrganizationalEmployee getFullInfoById(String id) {
+		OrganizationalEmployeeDoc employeeDoc = repository.findById(new ObjectId(""
+				+ id));
+		Objects.requireNonNull(employeeDoc, "employee not found");
+		OrganizationalEmployee employee = new OrganizationalEmployee();
+		BeanUtils.copyProperties(employeeDoc, employee);
+
+		// find position
+		if (employee.getOrgPosId() != null) {
+			OrganizationalPosition organizationalPosition = positionService.getById(employee.getOrgPosId());
+			employee.setPostion(organizationalPosition);
+		}
+		return employee;
+	}
+
+	@Override
 	public List<OrganizationalEmployee> getAllByOrgUnitId(String orgUnitId) {
 		List<OrganizationalEmployeeDoc> lstEmployeeDoc = repository.findByOrgUnitId(orgUnitId);
 		Objects.requireNonNull(lstEmployeeDoc, "employee not found");
 		List<OrganizationalEmployee> lstEmployee = new ArrayList<OrganizationalEmployee>();
 
 		for (int i = 0; i < lstEmployeeDoc.size(); i++) {
-			BeanUtils.copyProperties(lstEmployeeDoc.get(i), lstEmployee.get(i));
+			OrganizationalEmployee employee = new OrganizationalEmployee();
+			BeanUtils.copyProperties(lstEmployeeDoc.get(i), employee);
+			lstEmployee.add(employee);
+		}
+		return lstEmployee;
+	}
+
+	@Override
+	public List<OrganizationalEmployee> getAllFullInfoByOrgUnitId(String orgUnitId) {
+		List<OrganizationalEmployeeDoc> lstEmployeeDoc = repository.findByOrgUnitId(orgUnitId);
+		Objects.requireNonNull(lstEmployeeDoc, "employee not found");
+		List<OrganizationalEmployee> lstEmployee = new ArrayList<OrganizationalEmployee>();
+
+		for (int i = 0; i < lstEmployeeDoc.size(); i++) {
+			OrganizationalEmployee employee = new OrganizationalEmployee();
+			BeanUtils.copyProperties(lstEmployeeDoc.get(i), employee);
+			// find position
+			if (employee.getOrgPosId() != null) {
+				OrganizationalPosition organizationalPosition = positionService.getById(employee.getOrgPosId());
+				employee.setPostion(organizationalPosition);
+			}
+			lstEmployee.add(employee);
 		}
 		return lstEmployee;
 	}
@@ -60,6 +101,7 @@ public class OrgEmployeeServiceImpl implements OrgEmployeeService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void delete(String id) throws NullPointerException {
 		OrganizationalEmployeeDoc entity = repository.findById(new ObjectId(""
 				+ id));

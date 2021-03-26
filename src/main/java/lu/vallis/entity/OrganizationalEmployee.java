@@ -4,6 +4,7 @@ package lu.vallis.entity;
 
 import lombok.Data;
 import lombok.ToString;
+import org.javers.core.metamodel.annotation.DiffIgnore;
 import org.javers.core.metamodel.annotation.Id;
 import org.javers.core.metamodel.annotation.TypeName;
 
@@ -18,4 +19,8 @@ public class OrganizationalEmployee {
     private String name;
     private String imgUrl;
     private String status;
+    private String employeeId;
+
+    @DiffIgnore
+    private OrganizationalPosition postion;
 }

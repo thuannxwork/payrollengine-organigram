@@ -18,6 +18,7 @@ public class OrganizationalPositionDoc {
     @Id
     private String id;
     private String name;
-    private boolean isManager;
+    private Boolean isManager;
+    private int level;
     private String status;
 }

@@ -2,6 +2,7 @@ package lu.vallis.service;
 
 import lu.vallis.common.Constants;
 import lu.vallis.entity.OrganizationalEmployee;
+import lu.vallis.entity.OrganizationalPosition;
 import lu.vallis.entity.OrganizationalUnit;
 import lu.vallis.repository.OrgUnitRepository;
 import lu.vallis.document.OrganizationalUnitDoc;
@@ -29,6 +30,9 @@ public class OrgUnitServiceImpl implements OrgUnitService {
 	@Autowired
 	private OrgEmployeeService employeeService;
 
+	@Autowired
+	private OrgPositionService orgPositionService;
+
     public OrgUnitServiceImpl(OrgUnitRepository nodeRepository) {
     	this.nodeRepository = nodeRepository;
     }
@@ -44,16 +48,28 @@ public class OrgUnitServiceImpl implements OrgUnitService {
 				OrganizationalUnit organizationalUnit = new OrganizationalUnit();
 				BeanUtils.copyProperties(orgUnitDoc, organizationalUnit);
 
-				// find manager
-				if (!StringUtils.isEmpty(organizationalUnit.getManagerId())) {
-					OrganizationalEmployee manager = employeeService.getById(organizationalUnit.getManagerId());
-					organizationalUnit.setManager(manager);
-				}
-
 				// find staff list
-				List<OrganizationalEmployee> employees = employeeService.getAllByOrgUnitId(organizationalUnit.getId());
+				List<OrganizationalEmployee> employees = employeeService.getAllFullInfoByOrgUnitId(organizationalUnit.getId());
 				organizationalUnit.setEmployees(employees);
 
+				OrganizationalEmployee headOfUnit = null;
+				List<OrganizationalEmployee> managers = new ArrayList<OrganizationalEmployee>();
+
+				int managerLevel = 999999999;
+
+				for (OrganizationalEmployee employee : employees) {
+					// get position
+					if (employee.getPostion() != null && employee.getPostion().getIsManager()) {
+						managers.add(employee);
+						if (managerLevel > employee.getPostion().getLevel()) {
+							managerLevel = employee.getPostion().getLevel();
+							headOfUnit = employee;
+						}
+					}
+				}
+
+				organizationalUnit.setManagers(managers);
+				organizationalUnit.setHeadOfUnit(headOfUnit);
 
 				organizationalUnits.add(organizationalUnit);
 				rootOrgUnitId = orgCharts.get(0) != null ? orgCharts.get(0).getId() : Constants.DEFAULT_ROOT_NODE_ID;

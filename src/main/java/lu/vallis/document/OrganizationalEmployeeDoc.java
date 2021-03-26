@@ -18,8 +18,9 @@ public class OrganizationalEmployeeDoc {
     @Id
     private String id;
     private String orgUnitId;
-    private int orgPosId;
+    private String orgPosId;
     private String name;
     private String imgUrl;
     private String status;
+    private String employeeId;
 }

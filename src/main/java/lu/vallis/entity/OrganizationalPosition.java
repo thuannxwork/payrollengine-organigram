@@ -14,6 +14,7 @@ public class OrganizationalPosition {
     @Id
     private String id;
     private String name;
-    private boolean isManager;
+    private Boolean isManager;
     private String status;
+    private int level;
 }
