@@ -35,29 +35,32 @@ public class OrgUnitServiceImpl implements OrgUnitService {
 
     @Override
     public OrganizationalUnit getFullOrganigram(int rootId) {
+		List<OrganizationalUnit> organizationalUnits = new ArrayList<>();
+		String rootOrgUnitId = "";
+		try {
         List<OrganizationalUnitDoc> orgCharts = nodeRepository.findDistinctByRootId(rootId).orElseThrow(NotFoundException::new);
 
-        List<OrganizationalUnit> organizationalUnits = new ArrayList<>();
-        for (OrganizationalUnitDoc orgUnitDoc : orgCharts) {
-            OrganizationalUnit organizationalUnit = new OrganizationalUnit();
-            BeanUtils.copyProperties(orgUnitDoc, organizationalUnit);
+			for (OrganizationalUnitDoc orgUnitDoc : orgCharts) {
+				OrganizationalUnit organizationalUnit = new OrganizationalUnit();
+				BeanUtils.copyProperties(orgUnitDoc, organizationalUnit);
 
-            // find manager
-			if (!StringUtils.isEmpty(organizationalUnit.getManagerId())) {
-				OrganizationalEmployee manager = employeeService.getById(organizationalUnit.getManagerId());
-				organizationalUnit.setManager(manager);
+				// find manager
+				if (!StringUtils.isEmpty(organizationalUnit.getManagerId())) {
+					OrganizationalEmployee manager = employeeService.getById(organizationalUnit.getManagerId());
+					organizationalUnit.setManager(manager);
+				}
+
+				// find staff list
+				List<OrganizationalEmployee> employees = employeeService.getAllByOrgUnitId(organizationalUnit.getId());
+				organizationalUnit.setEmployees(employees);
+
+
+				organizationalUnits.add(organizationalUnit);
+				rootOrgUnitId = orgCharts.get(0) != null ? orgCharts.get(0).getId() : Constants.DEFAULT_ROOT_NODE_ID;
 			}
-
-			// find staff list
-			List<OrganizationalEmployee> employees = employeeService.getAllByOrgUnitId(organizationalUnit.getId());
-			organizationalUnit.setEmployees(employees);
-
-
-			organizationalUnits.add(organizationalUnit);
-        }
-
-        String rootOrgUnitId = orgCharts.get(0) != null ? orgCharts.get(0).getId() : Constants.DEFAULT_ROOT_NODE_ID;
-
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
         return OrgUnitService.assembleTree(organizationalUnits, rootOrgUnitId);
     }
@@ -178,14 +181,27 @@ public class OrgUnitServiceImpl implements OrgUnitService {
 
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void delete(String id) throws NullPointerException {
-		OrganizationalUnitDoc entity = nodeRepository.findById(new ObjectId(""
-				+ id));
-		Objects.requireNonNull(entity, "OrganizationalUnitDoc not found");
+		try {
+			OrganizationalUnitDoc entity = nodeRepository.findById(new ObjectId(""
+					+ id));
+			Objects.requireNonNull(entity, "OrganizationalUnitDoc not found");
 
-		entity.setStatus(Status.INACTIVE.name());
+			entity.setStatus(Status.INACTIVE.name());
 
-		nodeRepository.save(entity);
+			nodeRepository.save(entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void update(OrganizationalUnit request) {
+		var node = nodeRepository.findDistinctByRootIdAndId(request.getRootId(), request.getId()).orElseThrow(NotFoundException::new);
+		node.setName(request.getName());
+		nodeRepository.save(node);
 	}
 
 }

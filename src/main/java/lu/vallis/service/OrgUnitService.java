@@ -27,6 +27,8 @@ public interface OrgUnitService {
 
     void delete(String id);
 
+    void update(OrganizationalUnit request);
+
 	static OrganizationalUnit assembleTree(final List<OrganizationalUnit> orgUnitNodes, final String rootNodeId) {
         final Map<String, OrganizationalUnit> mapTmp = new LinkedHashMap<>();
         // Save all orgUnitNodes to a map

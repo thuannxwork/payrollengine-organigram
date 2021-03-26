@@ -17,7 +17,8 @@ public class OrgUnitController {
     @GetMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT + "/{rootId}")
     public ResponseEntity<OrganizationalUnit> getFullOrganization(@PathVariable("rootId") int rootId) {
 		System.out.println("rootId " + rootId);
-        return ResponseEntity.ok(organizationalService.getFullOrganigram(rootId));
+		OrganizationalUnit result = organizationalService.getFullOrganigram(rootId);
+		return ResponseEntity.ok(result);
     }
 
 	@CrossOrigin(origins = "*")
@@ -66,5 +67,12 @@ public class OrgUnitController {
 	public ResponseEntity<Void> deleteUnit(@PathVariable("id") String id) {
 		organizationalService.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@CrossOrigin(origins = "*")
+	@PostMapping(value = URI.PAYROLL_ORGANIGRAM_SERVICE + URI.UNIT + URI.UPDATE)
+	public ResponseEntity<Void> update(@RequestBody OrganizationalUnit request) {
+		organizationalService.update(request);
+		return ResponseEntity.ok().build();
 	}
 }
