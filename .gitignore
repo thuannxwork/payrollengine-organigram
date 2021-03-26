@@ -29,3 +29,6 @@ target/test-classes/application.yml
 target/test-classes/lu/vallis/GraphLookupTestsIT.class
 target/test-classes/lu/vallis/service/NodeServiceImplTest.class
 target/test-classes/lu/vallis/TestUtils.class
+*.class
+.idea/uiDesigner.xml
+*.kotlin_module
