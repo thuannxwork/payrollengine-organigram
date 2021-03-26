@@ -50,23 +50,24 @@ MongoDB connect:
 If you want to create manually data from PostMan, please download here
 
 # API LIST
-## 1. Get All Organization
+## 1. Organigram
+### 1.1. Get All Organization
 
-GET /payroll-organigram-service/{rootId} HTTP/1.1
+GET /payroll-organigram-service/unit/{rootId} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Accept: application/json
 Accept-Charset: utf-8
 
-## 2. Get Organization Unit
+### 1.2 Get Organization Unit
 
-GET /payroll-organigram-service/{rootId}/st/{orgUnitId} HTTP/1.1
+GET /payroll-organigram-service/unit/{rootId}/st/{orgUnitId} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Accept: application/json
 Accept-Charset: utf-8
 
-## 3. Create new Organization Unit
+### 1.3 Create new Organization Unit
 
-POST /payroll-organigram-service/{rootId}/{orgUnitId} HTTP/1.1
+POST /payroll-organigram-service/unit/{rootId}/{orgUnitId} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Accept: application/json
 Accept-Charset: utf-8
@@ -106,11 +107,79 @@ Accept-Charset: utf-8
 }
 ```
 
-## 4. Move Organization Unit
+### 1.4. Move Organization Unit
 
-PUT /payroll-organigram-service/{rootId}/{orgUnitId} HTTP/1.1
+PUT /payroll-organigram-service/unit/{rootId}/{orgUnitId} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Accept: application/json
 Accept-Charset: utf-8
 
+<<<<<<< Updated upstream
 
+=======
+## 2. Position
+###2.1. Create Position:
+````
+POST /payroll-organigram-service/position/ HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+Accept-Charset: utf-8
+````
+
+###2.2. Update Position:
+````
+PUT /payroll-organigram-service/position/{id} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+Accept-Charset: utf-8
+````
+
+###2.3. Delete Position:
+````
+DELETE /payroll-organigram-service/position/{id} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+Accept-Charset: utf-8
+````
+
+###2.4. Get Position:
+````
+GET /payroll-organigram-service/position/{id} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+Accept-Charset: utf-8
+````
+
+## 3. Employee
+###3.1. Create Employee:
+````
+POST /payroll-organigram-service/employee/ HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+Accept-Charset: utf-8
+````
+
+###3.2. Update Employee:
+````
+PUT /payroll-organigram-service/employee/{id} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+Accept-Charset: utf-8
+````
+
+###3.3. Delete Employee:
+````
+DELETE /payroll-organigram-service/employee/{id} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+Accept-Charset: utf-8
+````
+
+###3.4. Get Position:
+````
+GET /payroll-organigram-service/employee/{id} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+Accept-Charset: utf-8
+````
+>>>>>>> Stashed changes
