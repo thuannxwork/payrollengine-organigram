@@ -1,7 +1,6 @@
 
 package lu.vallis.document;
 
-import lu.vallis.enumeration.EntityType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,28 +10,28 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "nodes")
+@Document(collection = "organizational_unit")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Node {
+public class OrganizationalUnitDoc {
 
   @Id
   private String id;
 
-  private int orgUnitId;
-
-  private int versionId;
+//  private String orgUnitId;
 
   private String name;
 
-  private EntityType entityType;
-
   private int rootId;
 
-  private List<Integer> parentOrgUnitId;
+  private List<String> parentOrgUnitId;
 
-  private List<Node> descendants;
+  private List<OrganizationalUnitDoc> descendants;
+
+  private Long managerId;
+
+  private String status;
 
 }

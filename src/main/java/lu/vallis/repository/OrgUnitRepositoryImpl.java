@@ -1,6 +1,6 @@
 package lu.vallis.repository;
 
-import lu.vallis.document.Node;
+import lu.vallis.document.OrganizationalUnitDoc;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.GraphLookupOperation;
@@ -13,34 +13,34 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class NodeRepositoryImpl implements NodeGraphLookupRepository {
+public class OrgUnitRepositoryImpl implements OrgUnitGraphLookupRepository {
 
 	private static final long MAX_DEPTH_SUPPORTED = 10000L;
 
 	private final MongoTemplate mongoTemplate;
 
-	public NodeRepositoryImpl(MongoTemplate mongoTemplate) {
+	public OrgUnitRepositoryImpl(MongoTemplate mongoTemplate) {
 		this.mongoTemplate = mongoTemplate;
 	}
 
 	@Override
-	public Optional<List<Node>> getSubTree(int treeId, int nodeId, Long maxDepth) {
-		final Criteria byNodeId = new Criteria("orgUnitId").is(nodeId);
-		final Criteria byTreeId = new Criteria("rootId").is(treeId);
+	public Optional<List<OrganizationalUnitDoc>> getSubOrganigram(int rootId, String orgUnitId, Long maxDepth) {
+		final Criteria byNodeId = new Criteria("orgUnitId").is(orgUnitId);
+		final Criteria byTreeId = new Criteria("rootId").is(rootId);
 		final MatchOperation matchStage = Aggregation.match(byTreeId.andOperator(byNodeId));
 
 		GraphLookupOperation graphLookupOperation = GraphLookupOperation.builder()
-				.from("nodes")
+				.from("organizational_unit")
 				.startWith("$orgUnitId")
 				.connectFrom("orgUnitId")
 				.connectTo("parentOrgUnitId")
-				.restrict(new Criteria("rootId").is(treeId))
+				.restrict(new Criteria("rootId").is(rootId))
 				.maxDepth(maxDepth != null ? maxDepth : MAX_DEPTH_SUPPORTED)
 				.as("descendants");
 
 		Aggregation aggregation = Aggregation.newAggregation(matchStage, graphLookupOperation);
 
-		List<Node> results = mongoTemplate.aggregate(aggregation, "nodes", Node.class).getMappedResults();
+		List<OrganizationalUnitDoc> results = mongoTemplate.aggregate(aggregation, "organizational_unit", OrganizationalUnitDoc.class).getMappedResults();
 		return CollectionUtils.isEmpty(results) ? Optional.empty() : Optional.of(results);
 	}
 

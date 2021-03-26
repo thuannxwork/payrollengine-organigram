@@ -1,0 +1,73 @@
+[{
+  "_id": {
+    "$oid": "605d69ad6c969f5c6ca2ee47"
+  },
+  "name": "General Director",
+  "isManager": true,
+  "level": 1,
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "605d69b06c969f5c6ca2ee48"
+  },
+  "name": "Vice Director",
+  "isManager": true,
+  "level": 2,
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "605d69b26c969f5c6ca2ee49"
+  },
+  "name": "Head Of Department",
+  "isManager": true,
+  "level": 3,
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "605d69b56c969f5c6ca2ee4a"
+  },
+  "name": "Web Analyst & Developer",
+  "isManager": false,
+  "level": 4,
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "605d69b76c969f5c6ca2ee4b"
+  },
+  "name": "SAP Coordinator",
+  "isManager": false,
+  "level": 4,
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "605d69b96c969f5c6ca2ee4c"
+  },
+  "name": "SAP&BI Application Developer",
+  "isManager": false,
+  "level": 4,
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "605d69bb6c969f5c6ca2ee4d"
+  },
+  "name": "IT Business Analyst",
+  "isManager": false,
+  "level": 4,
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "605d69be6c969f5c6ca2ee4e"
+  },
+  "name": "Stagiaire",
+  "isManager": false,
+  "level": 4,
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "605d6b166c969f5c6ca2ee4f"
+  },
+  "name": "AVP IT Development",
+  "isManager": false,
+  "level": 4,
+  "status": "ACTIVE"
+}]

@@ -1,0 +1,64 @@
+[{
+  "_id": {
+    "$oid": "605c6c3ca2906f66fbc85019"
+  },
+  "name": "IT S&S",
+  "rootId": 1001,
+  "parentOrgUnitId": [
+    "-1"
+  ]
+},{
+  "_id": {
+    "$oid": "605c6c67a2906f66fbc8501a"
+  },
+  "name": "Network Administration",
+  "rootId": 1001,
+  "parentOrgUnitId": [
+    "605c6c3ca2906f66fbc85019"
+  ]
+},{
+  "_id": {
+    "$oid": "605d52717ff46a4b2eba1253"
+  },
+  "name": "System Administration",
+  "rootId": 1001,
+  "parentOrgUnitId": [
+    "605c6c3ca2906f66fbc85019"
+  ]
+},{
+  "_id": {
+    "$oid": "605d52737ff46a4b2eba1254"
+  },
+  "name": "Customer Services",
+  "rootId": 1001,
+  "parentOrgUnitId": [
+    "605c6c3ca2906f66fbc85019"
+  ]
+},{
+  "_id": {
+    "$oid": "605d52787ff46a4b2eba1255"
+  },
+  "name": "IT Development",
+  "rootId": 1001,
+  "parentOrgUnitId": [
+    "605c6c3ca2906f66fbc85019"
+  ]
+},{
+  "_id": {
+    "$oid": "605d529e7ff46a4b2eba1256"
+  },
+  "name": "S A P",
+  "rootId": 1001,
+  "parentOrgUnitId": [
+    "605d52787ff46a4b2eba1255"
+  ]
+},{
+  "_id": {
+    "$oid": "605d52a07ff46a4b2eba1257"
+  },
+  "name": "Custom Development",
+  "rootId": 1001,
+  "parentOrgUnitId": [
+    "605d52787ff46a4b2eba1255"
+  ]
+}]

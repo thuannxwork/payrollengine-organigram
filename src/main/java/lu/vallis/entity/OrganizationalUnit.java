@@ -2,7 +2,6 @@
 package lu.vallis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lu.vallis.enumeration.EntityType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,27 +21,32 @@ import java.util.List;
 public class OrganizationalUnit implements Serializable {
 
     @Id
-    private int orgUnitId;
-
-    private int orgId;
-
-//    private int versionId;
+    private String id;
 
     private String name;
 
-    private EntityType entityType;
+    @DiffIgnore
+    private List<OrganizationalEmployee> managers;
+
+    @DiffIgnore
+    private OrganizationalEmployee headOfUnit;
 
     @DiffIgnore
     private int rootId;
 
     @DiffIgnore
-    private List<Integer> parentOrgUnitId;
+    private List<String> parentOrgUnitId;
 
     private List<OrganizationalUnit> children;
 
     @DiffIgnore
     @JsonIgnore
     private List<OrganizationalUnit> parents;
+
+    @DiffIgnore
+    private List<OrganizationalEmployee> employees;
+
+    private String status;
 
     public OrganizationalUnit() {
         this.parentOrgUnitId = new ArrayList<>();
