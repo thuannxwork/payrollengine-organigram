@@ -6,7 +6,8 @@
   "orgPosId": "605d69ad6c969f5c6ca2ee47",
   "name": "David",
   "imgUrl": "",
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "employeeId": "68686868"
 },{
   "_id": {
     "$oid": "605d8ac4ad2367722c1ff015"
@@ -15,7 +16,8 @@
   "orgPosId": "605d69b96c969f5c6ca2ee4c",
   "name": "Jenny Nguyen",
   "imgUrl": "",
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "employeeId": "123456"
 },{
   "_id": {
     "$oid": "605d8b03ad2367722c1ff016"
@@ -24,7 +26,8 @@
   "orgPosId": "605d69b96c969f5c6ca2ee4c",
   "name": "Danny",
   "imgUrl": "",
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "employeeId": "10350"
 },{
   "_id": {
     "$oid": "605d8b05ad2367722c1ff017"
@@ -33,5 +36,36 @@
   "orgPosId": "605d69b96c969f5c6ca2ee4c",
   "name": "Kevin",
   "imgUrl": "",
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "employeeId": "14296"
+},{
+  "_id": {
+    "$oid": "605df35ddb950e6d9ed7f7d1"
+  },
+  "orgUnitId": "605c6c67a2906f66fbc8501a",
+  "orgPosId": "605d69b96c969f5c6ca2ee4c",
+  "name": "Peter",
+  "imgUrl": "",
+  "status": "ACTIVE",
+  "employeeId": "886699"
+},{
+  "_id": {
+    "$oid": "605df5220dbd2a10bcfc578a"
+  },
+  "orgUnitId": "605d529e7ff46a4b2eba1256",
+  "orgPosId": "605d69b96c969f5c6ca2ee4c",
+  "name": "Peter",
+  "imgUrl": "",
+  "status": "ACTIVE",
+  "employeeId": "886699"
+},{
+  "_id": {
+    "$oid": "605df5850dbd2a10bcfc578b"
+  },
+  "orgUnitId": "605d52787ff46a4b2eba1255",
+  "orgPosId": "605d69b26c969f5c6ca2ee49",
+  "name": "Sussan",
+  "imgUrl": "",
+  "status": "ACTIVE",
+  "employeeId": "123456"
 }]

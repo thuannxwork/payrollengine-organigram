@@ -114,11 +114,8 @@ Content-Type: application/x-www-form-urlencoded
 Accept: application/json
 Accept-Charset: utf-8
 
-<<<<<<< Updated upstream
-
-=======
 ## 2. Position
-###2.1. Create Position:
+### 2.1. Create Position:
 ````
 POST /payroll-organigram-service/position/ HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
@@ -126,7 +123,7 @@ Accept: application/json
 Accept-Charset: utf-8
 ````
 
-###2.2. Update Position:
+### 2.2. Update Position:
 ````
 PUT /payroll-organigram-service/position/{id} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
@@ -134,7 +131,7 @@ Accept: application/json
 Accept-Charset: utf-8
 ````
 
-###2.3. Delete Position:
+### 2.3. Delete Position:
 ````
 DELETE /payroll-organigram-service/position/{id} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
@@ -142,7 +139,7 @@ Accept: application/json
 Accept-Charset: utf-8
 ````
 
-###2.4. Get Position:
+### 2.4. Get Position:
 ````
 GET /payroll-organigram-service/position/{id} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
@@ -151,7 +148,7 @@ Accept-Charset: utf-8
 ````
 
 ## 3. Employee
-###3.1. Create Employee:
+### 3.1. Create Employee:
 ````
 POST /payroll-organigram-service/employee/ HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
@@ -159,7 +156,7 @@ Accept: application/json
 Accept-Charset: utf-8
 ````
 
-###3.2. Update Employee:
+### 3.2. Update Employee:
 ````
 PUT /payroll-organigram-service/employee/{id} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
@@ -167,7 +164,7 @@ Accept: application/json
 Accept-Charset: utf-8
 ````
 
-###3.3. Delete Employee:
+### 3.3. Delete Employee:
 ````
 DELETE /payroll-organigram-service/employee/{id} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
@@ -175,7 +172,7 @@ Accept: application/json
 Accept-Charset: utf-8
 ````
 
-###3.4. Get Position:
+### 3.4. Get Position:
 ````
 GET /payroll-organigram-service/employee/{id} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
