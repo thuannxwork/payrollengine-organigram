@@ -25,14 +25,14 @@ public class OrgUnitRepositoryImpl implements OrgUnitGraphLookupRepository {
 
 	@Override
 	public Optional<List<OrganizationalUnitDoc>> getSubOrganigram(int rootId, String orgUnitId, Long maxDepth) {
-		final Criteria byNodeId = new Criteria("orgUnitId").is(orgUnitId);
+		final Criteria byNodeId = new Criteria("_id").is(orgUnitId);
 		final Criteria byTreeId = new Criteria("rootId").is(rootId);
 		final MatchOperation matchStage = Aggregation.match(byTreeId.andOperator(byNodeId));
 
 		GraphLookupOperation graphLookupOperation = GraphLookupOperation.builder()
 				.from("organizational_unit")
-				.startWith("$orgUnitId")
-				.connectFrom("orgUnitId")
+				.startWith("$_id")
+				.connectFrom("_id")
 				.connectTo("parentOrgUnitId")
 				.restrict(new Criteria("rootId").is(rootId))
 				.maxDepth(maxDepth != null ? maxDepth : MAX_DEPTH_SUPPORTED)

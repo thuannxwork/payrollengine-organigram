@@ -116,14 +116,16 @@ public interface OrgUnitService {
                         final OrganizationalUnit parentUnit = mapOrgUnitTmp.get(pid);
 
                         if (parentUnit != null && parentUnit.getHeadOfUnit() != null) {
-                            OrganizationalEmployee parentUnitManager = parentUnit.getHeadOfUnit();
+                            OrganizationalEmployee parentUnitManager = mapEmployeeTmp.get(parentUnit.getHeadOfUnit().getId());
 
                             for (OrganizationalEmployee employee : currentUnit.getEmployees()) {
                                 if (parentUnitManager != null) {
-                                    parentUnitManager.addChild(employee);
-                                    employee.addParent(parentUnitManager);
+                                    OrganizationalEmployee empFromMap = mapEmployeeTmp.get(employee.getId());
+
+                                    parentUnitManager.addChild(empFromMap);
+                                    empFromMap.addParent(parentUnitManager);
                                     mapEmployeeTmp.put(parentUnitManager.getId(), parentUnitManager);
-                                    mapEmployeeTmp.put(employee.getId(), employee);
+                                    mapEmployeeTmp.put(empFromMap.getId(), empFromMap);
                                 }
                             }
                         }

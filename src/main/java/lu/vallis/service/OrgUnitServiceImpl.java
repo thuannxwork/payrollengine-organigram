@@ -200,15 +200,19 @@ public class OrgUnitServiceImpl implements OrgUnitService {
 	@Override
     @Transactional(rollbackFor = Exception.class)
 	public void deleteOrgUnitNodes(int rootId, String orgUnitId)  {
-		// ... perform validations etc.
-		List<OrganizationalUnitDoc> nodes = nodeRepository.getSubOrganigram(rootId, orgUnitId, 1L).orElseThrow(NotFoundException::new);
-		var target = nodes.get(0);
-		if (!CollectionUtils.isEmpty(target.getDescendants())) {
-			target.getDescendants().forEach(n -> n.setParentOrgUnitId(target.getParentOrgUnitId()));
-			nodeRepository.saveAll(target.getDescendants());
-		}
+		try {
+			// ... perform validations etc.
+			List<OrganizationalUnitDoc> nodes = nodeRepository.getSubOrganigram(rootId, orgUnitId, 1L).orElseThrow(NotFoundException::new);
+			var target = nodes.get(0);
+			if (!CollectionUtils.isEmpty(target.getDescendants())) {
+				target.getDescendants().forEach(n -> n.setParentOrgUnitId(target.getParentOrgUnitId()));
+				nodeRepository.saveAll(target.getDescendants());
+			}
 
-		nodeRepository.delete(target);
+			nodeRepository.delete(target);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
