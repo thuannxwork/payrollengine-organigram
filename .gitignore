@@ -32,3 +32,6 @@ target/test-classes/lu/vallis/TestUtils.class
 *.class
 *.kotlin_module
 .idea/uiDesigner.xml
+.idea/*
+*.iml
+*.sock
